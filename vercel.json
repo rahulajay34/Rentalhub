@@ -12,7 +12,22 @@
       "src": "api/index.js",
       "use": "@vercel/node",
       "config": {
-        "includeFiles": ["./**"]
+        "includeFiles": [
+          "models/**",
+          "routes/**",
+          "middleware/**"
+        ],
+        "excludeFiles": [
+          "client/**",
+          "uploads/**",
+          "node_modules/**",
+          "*.md",
+          "*.log",
+          "test*",
+          "add-sample-data.js",
+          "check-admin.js",
+          "reset-admin.js"
+        ]
       }
     }
   ],
@@ -38,6 +53,11 @@
       "dest": "/client/build/index.html"
     }
   ],
+  "functions": {
+    "api/index.js": {
+      "maxDuration": 30
+    }
+  },
   "env": {
     "MONGODB_URI": "mongodb+srv://aj00ay00:rahulMongo@cluster0.gpymdgc.mongodb.net/demoCheetah?retryWrites=true&w=majority",
     "JWT_SECRET": "rentalhub_secret_key_2024",
