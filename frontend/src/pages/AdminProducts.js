@@ -36,8 +36,7 @@ import {
   PhotoCamera,
   Save as SaveIcon,
   Cancel as CancelIcon,
-  Search as SearchIcon,
-  FilterList as FilterIcon
+  Search as SearchIcon
 } from '@mui/icons-material';
 import { motion, AnimatePresence } from 'framer-motion';
 import { productsAPI, getImageUrl } from '../utils/api';
@@ -297,7 +296,7 @@ const AdminProducts = () => {
               </Grid>
               <Grid item xs={12} md={2}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <FilterIcon color="action" />
+                  <SearchIcon color="action" />
                   <Typography variant="body2" color="text.secondary">
                     {filteredProducts.length} products
                   </Typography>

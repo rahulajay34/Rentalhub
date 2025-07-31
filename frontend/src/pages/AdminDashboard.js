@@ -26,7 +26,6 @@ import {
   Dashboard as DashboardIcon,
   Inventory as ProductsIcon,
   QuestionAnswer as InquiriesIcon,
-  QuestionAnswer,
   Settings as SettingsIcon,
   ExitToApp as LogoutIcon,
   TrendingUp,
@@ -111,7 +110,7 @@ const AdminDashboard = () => {
       title: 'Total Inquiries',
       value: stats.total,
       color: '#1976d2',
-      icon: <QuestionAnswer />,
+      icon: <InquiriesIcon />,
       change: '+12%'
     },
     {

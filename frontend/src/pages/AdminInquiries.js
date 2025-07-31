@@ -42,7 +42,6 @@ import {
   Business as BusinessIcon,
   Schedule as ScheduleIcon,
   Search as SearchIcon,
-  FilterList as FilterIcon,
   WhatsApp as WhatsAppIcon,
   Call as CallIcon
 } from '@mui/icons-material';
@@ -257,7 +256,7 @@ const AdminInquiries = () => {
               </Grid>
               <Grid item xs={12} md={2}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <FilterIcon color="action" />
+                  <SearchIcon color="action" />
                   <Typography variant="body2" color="text.secondary">
                     {filteredInquiries.length} inquiries
                   </Typography>
