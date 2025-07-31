@@ -2,14 +2,17 @@
   "version": 2,
   "builds": [
     {
-      "src": "backend/api/index.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "frontend/package.json",
+      "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "build"
+        "distDir": "frontend/build"
+      }
+    },
+    {
+      "src": "backend/api/index.js",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": ["backend/**"]
       }
     }
   ],
@@ -19,16 +22,25 @@
       "dest": "/backend/api/index.js"
     },
     {
+      "src": "/uploads/(.*)",
+      "dest": "/backend/uploads/$1"
+    },
+    {
       "src": "/static/(.*)",
       "dest": "/frontend/build/static/$1"
     },
     {
-      "src": "/(favicon\\.ico|logo.*\\.png|manifest\\.json|robots\\.txt|.*\\.(jpg|jpeg|png|gif|svg|webp))",
+      "src": "/(.*\\.(ico|png|jpg|jpeg|gif|svg|webp|js|css|woff|woff2|ttf|eot|map|json))",
       "dest": "/frontend/build/$1"
     },
     {
       "src": "/(.*)",
       "dest": "/frontend/build/index.html"
     }
-  ]
+  ],
+  "env": {
+    "MONGODB_URI": "@mongodb_uri",
+    "JWT_SECRET": "@jwt_secret",
+    "NODE_ENV": "production"
+  }
 }

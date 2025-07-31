@@ -15,11 +15,16 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: ['http://localhost:3000', 'https://rentalhub-ten.vercel.app'],
+  origin: [
+    'http://localhost:3000', 
+    'https://rentalhub-ten.vercel.app',
+    'https://rentalhub-m983580tg-rahuls-projects-2a408d32.vercel.app',
+    /\.vercel\.app$/
+  ],
   credentials: true
 }));
 app.use(express.json());
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 // MongoDB Connection (with connection reuse for serverless)
 let cachedConnection = null;
