@@ -11,9 +11,7 @@ import {
   Chip,
   Paper,
   Avatar,
-  Rating,
-  useTheme,
-  useMediaQuery
+  Rating
 } from '@mui/material';
 import {
   FitnessCenter as FitnessIcon,
@@ -21,9 +19,7 @@ import {
   Security as SecurityIcon,
   Speed as SpeedIcon,
   Verified as VerifiedIcon,
-  LocalShipping as ShippingIcon,
-  Support as SupportIcon,
-  Star as StarIcon
+  Support as SupportIcon
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
@@ -31,8 +27,6 @@ import { productsAPI, getImageUrl } from '../utils/api';
 import ProductImage from '../components/ProductImage';
 
 const Home = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const navigate = useNavigate();
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [loading, setLoading] = useState(true);

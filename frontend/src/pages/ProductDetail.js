@@ -22,9 +22,7 @@ import {
   Link,
   IconButton,
   Card,
-  CardContent,
-  Avatar,
-  Divider
+  Avatar
 } from '@mui/material';
 import {
   WhatsApp,
@@ -69,22 +67,22 @@ const ProductDetail = () => {
   const [favorite, setFavorite] = useState(false);
 
   useEffect(() => {
-    fetchProduct();
-  }, [id]);
-
-  const fetchProduct = async () => {
-    try {
-      setLoading(true);
-      const response = await productsAPI.getById(id);
-      setProduct(response.data);
-      setError('');
-    } catch (err) {
-      setError('Product not found or failed to load.');
-      console.error('Error fetching product:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
+    const loadProduct = async () => {
+      try {
+        setLoading(true);
+        const response = await productsAPI.getById(id);
+        setProduct(response.data);
+        setError('');
+      } catch (err) {
+        setError('Product not found or failed to load.');
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    loadProduct();
+  }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleImageChange = (direction) => {
     if (!product?.images?.length) return;

@@ -16,13 +16,11 @@ import {
   Select,
   MenuItem,
   Paper,
-  CircularProgress,
   Alert,
   Skeleton
 } from '@mui/material';
 import {
   Search as SearchIcon,
-  FilterList as FilterIcon,
   ViewModule as GridViewIcon,
   ViewList as ListViewIcon
 } from '@mui/icons-material';
@@ -59,8 +57,27 @@ const Products = () => {
   }, [category]);
 
   useEffect(() => {
-    filterProducts();
-  }, [products, searchTerm, selectedCategory]);
+    const applyFilters = () => {
+      let filtered = [...products];
+
+      // Filter by category
+      if (selectedCategory !== 'all') {
+        filtered = filtered.filter(product => product.category === selectedCategory);
+      }
+
+      // Filter by search term
+      if (searchTerm) {
+        filtered = filtered.filter(product =>
+          product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          product.description.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+      }
+
+      setFilteredProducts(filtered);
+    };
+
+    applyFilters();
+  }, [products, searchTerm, selectedCategory]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchProducts = async () => {
     try {
@@ -74,28 +91,6 @@ const Products = () => {
     } finally {
       setLoading(false);
     }
-  };
-
-  const filterProducts = () => {
-    let filtered = [...products];
-
-    // Filter by category
-    if (selectedCategory !== 'all') {
-      filtered = filtered.filter(product => product.category === selectedCategory);
-    }
-
-    // Filter by search term
-    if (searchTerm) {
-      filtered = filtered.filter(product =>
-        product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        product.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        product.features?.some(feature => 
-          feature.toLowerCase().includes(searchTerm.toLowerCase())
-        )
-      );
-    }
-
-    setFilteredProducts(filtered);
   };
 
   const handleSearchChange = (event) => {

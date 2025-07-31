@@ -6,8 +6,7 @@ import {
   Typography,
   Link,
   IconButton,
-  Divider,
-  useTheme
+  Divider
 } from '@mui/material';
 import {
   Email as EmailIcon,
@@ -23,8 +22,6 @@ import { motion } from 'framer-motion';
 import { Link as RouterLink } from 'react-router-dom';
 
 const Footer = () => {
-  const theme = useTheme();
-
   const categories = [
     { name: 'Health & Fitness', path: '/products/Health & Fitness' },
     { name: 'Baby Safety Gear', path: '/products/Baby Safety Gear' }

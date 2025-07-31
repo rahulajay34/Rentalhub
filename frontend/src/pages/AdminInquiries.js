@@ -21,7 +21,6 @@ import {
   Alert,
   Snackbar,
   CircularProgress,
-  Divider,
   Avatar,
   Button,
   Table,
@@ -36,20 +35,18 @@ import {
 } from '@mui/material';
 import {
   Visibility as ViewIcon,
-  Edit as EditIcon,
   Delete as DeleteIcon,
   Phone as PhoneIcon,
   Email as EmailIcon,
   Person as PersonIcon,
   Business as BusinessIcon,
   Schedule as ScheduleIcon,
-  LocationOn as LocationIcon,
   Search as SearchIcon,
   FilterList as FilterIcon,
   WhatsApp as WhatsAppIcon,
   Call as CallIcon
 } from '@mui/icons-material';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { inquiriesAPI, formatDate } from '../utils/api';
 
 const AdminInquiries = () => {
@@ -70,16 +67,21 @@ const AdminInquiries = () => {
     { value: 'closed', label: 'Closed', color: '#9e9e9e' }
   ];
 
-  const urgencyOptions = [
-    { value: 'low', label: 'Low', color: '#4caf50' },
-    { value: 'medium', label: 'Medium', color: '#ff9800' },
-    { value: 'high', label: 'High', color: '#f44336' },
-    { value: 'urgent', label: 'Urgent', color: '#d32f2f' }
-  ];
-
   useEffect(() => {
-    fetchInquiries();
-  }, []);
+    const loadInquiries = async () => {
+      try {
+        setLoading(true);
+        const response = await inquiriesAPI.getAll();
+        setInquiries(response.data);
+      } catch (error) {
+        showSnackbar('Error fetching inquiries', 'error');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadInquiries();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchInquiries = async () => {
     try {
@@ -161,11 +163,6 @@ const AdminInquiries = () => {
   const getStatusColor = (status) => {
     const statusOption = statusOptions.find(option => option.value === status);
     return statusOption?.color || '#9e9e9e';
-  };
-
-  const getUrgencyColor = (urgency) => {
-    const urgencyOption = urgencyOptions.find(option => option.value === urgency);
-    return urgencyOption?.color || '#9e9e9e';
   };
 
   if (loading) {

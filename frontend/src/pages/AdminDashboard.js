@@ -10,7 +10,6 @@ import {
   Avatar,
   Button,
   IconButton,
-  Divider,
   List,
   ListItem,
   ListItemIcon,
@@ -32,19 +31,17 @@ import {
   ExitToApp as LogoutIcon,
   TrendingUp,
   People,
-  ShoppingCart,
   Notifications,
   MoreVert,
   AdminPanelSettings
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { inquiriesAPI } from '../utils/api';
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
-  const location = useLocation();
   const { admin, logout } = useAuth();
   const [anchorEl, setAnchorEl] = useState(null);
   const [stats, setStats] = useState({

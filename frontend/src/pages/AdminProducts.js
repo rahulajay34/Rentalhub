@@ -26,8 +26,6 @@ import {
   Switch,
   FormControlLabel,
   Divider,
-  Stack,
-  Avatar,
   Fab,
   Tooltip
 } from '@mui/material';
@@ -35,8 +33,6 @@ import {
   Add as AddIcon,
   Edit as EditIcon,
   Delete as DeleteIcon,
-  Visibility as ViewIcon,
-  VisibilityOff as HideIcon,
   PhotoCamera,
   Save as SaveIcon,
   Cancel as CancelIcon,
@@ -70,8 +66,20 @@ const AdminProducts = () => {
   const categories = ['Health & Fitness', 'Baby Safety Gear'];
 
   useEffect(() => {
-    fetchProducts();
-  }, []);
+    const loadProducts = async () => {
+      try {
+        setLoading(true);
+        const response = await productsAPI.getAllForAdmin();
+        setProducts(response.data);
+      } catch (error) {
+        showSnackbar('Error fetching products', 'error');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProducts();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchProducts = async () => {
     try {
