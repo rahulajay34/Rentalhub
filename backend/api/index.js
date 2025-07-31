@@ -5,9 +5,9 @@ const dotenv = require('dotenv');
 const path = require('path');
 
 // Import routes
-const productRoutes = require('./routes/products');
-const inquiryRoutes = require('./routes/inquiries');
-const adminRoutes = require('./routes/admin');
+const productRoutes = require('../routes/products');
+const inquiryRoutes = require('../routes/inquiries');
+const adminRoutes = require('../routes/admin');
 
 dotenv.config();
 
@@ -15,7 +15,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: ['http://localhost:3000', 'https://your-vercel-domain.vercel.app'],
+  origin: ['http://localhost:3000', 'https://rentalhub-ten.vercel.app'],
   credentials: true
 }));
 app.use(express.json());
