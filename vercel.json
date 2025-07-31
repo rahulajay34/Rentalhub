@@ -1,36 +1,8 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "client/build"
-      }
-    },
-    {
-      "src": "api/index.js",
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": [
-          "models/**",
-          "routes/**",
-          "middleware/**"
-        ],
-        "excludeFiles": [
-          "client/**",
-          "uploads/**",
-          "node_modules/**",
-          "*.md",
-          "*.log",
-          "test*",
-          "add-sample-data.js",
-          "check-admin.js",
-          "reset-admin.js"
-        ]
-      }
-    }
-  ],
+  "buildCommand": "cd client && npm install && npm run build",
+  "outputDirectory": "client/build",
+  "installCommand": "npm install",
   "routes": [
     {
       "src": "/api/(.*)",
