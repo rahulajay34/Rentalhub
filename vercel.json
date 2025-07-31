@@ -1,34 +1,18 @@
 {
-  "version": 2,
-  "builds": [
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "cd frontend && npm run build",
+  "outputDirectory": "frontend/build",
+  "rewrites": [
     {
-      "src": "frontend/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "build"
-      }
-    },
-    {
-      "src": "backend/server.js",
-      "use": "@vercel/node"
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
     }
   ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/backend/server.js"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/frontend/build/$1"
-    }
-  ],
-  "env": {
-    "NODE_ENV": "production",
-    "MONGODB_URI": "mongodb+srv://aj00ay00:rahulMongo@cluster0.gpymdgc.mongodb.net/demoCheetah?retryWrites=true&w=majority"
-  },
   "functions": {
     "backend/server.js": {
+      "maxDuration": 30
+    },
+    "backend/api/index.js": {
       "maxDuration": 30
     }
   }
