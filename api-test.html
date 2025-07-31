@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Test</title>
+</head>
+<body>
+    <h1>API Test Results</h1>
+    <div id="results"></div>
+    
+    <script>
+        async function testAPI() {
+            const resultsDiv = document.getElementById('results');
+            
+            try {
+                // Test public products endpoint
+                const response = await fetch('http://localhost:5000/api/products');
+                const data = await response.json();
+                
+                resultsDiv.innerHTML = `
+                    <h2>Public Products API Test</h2>
+                    <p><strong>Status:</strong> ${response.status}</p>
+                    <p><strong>Data Type:</strong> ${Array.isArray(data) ? 'Array' : typeof data}</p>
+                    <p><strong>Data Length:</strong> ${Array.isArray(data) ? data.length : 'N/A'}</p>
+                    <p><strong>Sample Data:</strong></p>
+                    <pre>${JSON.stringify(data.slice ? data.slice(0, 1) : data, null, 2)}</pre>
+                `;
+            } catch (error) {
+                resultsDiv.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        }
+        
+        testAPI();
+    </script>
+</body>
+</html>

@@ -9,7 +9,30 @@
 			"group": "build",
 			"isBackground": true,
 			"options": {
-				"cwd": "${workspaceFolder}/backend"
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Start Frontend Client",
+			"type": "shell",
+			"command": "npm start",
+			"args": [],
+			"group": "build",
+			"isBackground": true,
+			"options": {
+				"cwd": "${workspaceFolder}/client"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Build Frontend",
+			"type": "shell",
+			"command": "npm run build",
+			"args": [],
+			"group": "build",
+			"options": {
+				"cwd": "${workspaceFolder}/client"
 			},
 			"problemMatcher": []
 		}

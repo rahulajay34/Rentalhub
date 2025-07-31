@@ -38,25 +38,27 @@ A complete rental website built with React frontend and Node.js backend, special
 ## 📁 Project Structure
 
 ```
-TRI2/
-├── frontend/                 # React application
-│   ├── public/              # Static files
+Rentalhub/
+├── client/                  # React application
+│   ├── public/             # Static files
 │   ├── src/
-│   │   ├── components/      # Reusable components
-│   │   ├── pages/          # Page components
-│   │   ├── context/        # React context providers
-│   │   ├── utils/          # Utility functions and API calls
-│   │   └── App.js          # Main App component
+│   │   ├── components/     # Reusable components
+│   │   ├── pages/         # Page components
+│   │   ├── context/       # React context providers
+│   │   ├── utils/         # Utility functions and API calls
+│   │   └── App.js         # Main App component
 │   └── package.json
 │
-├── backend/                 # Node.js API server
-│   ├── middleware/         # Custom middleware
-│   ├── models/            # Mongoose models
-│   ├── routes/            # API routes
-│   ├── uploads/           # File upload directory
-│   ├── server.js          # Main server file
-│   └── package.json
+├── api/                    # Vercel serverless API
+│   └── index.js           # API entry point for Vercel
 │
+├── middleware/             # Custom middleware
+├── models/                # Mongoose models
+├── routes/                # API routes
+├── uploads/               # File upload directory
+├── server.js              # Main server file (for local development)
+├── package.json           # Backend dependencies
+├── vercel.json            # Vercel deployment configuration
 └── README.md
 ```
 
@@ -72,19 +74,19 @@ TRI2/
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
-   cd TRI2
+   cd Rentalhub
    ```
 
-2. **Setup Backend**
+2. **Install Backend Dependencies**
    ```bash
-   cd backend
    npm install
    ```
 
-3. **Setup Frontend**
+3. **Install Frontend Dependencies**
    ```bash
-   cd ../frontend
+   cd client
    npm install
+   cd ..
    ```
 
 4. **Environment Configuration**
@@ -101,7 +103,6 @@ TRI2/
 
 1. **Start the Backend Server**
    ```bash
-   cd backend
    npm start
    # or for development with auto-restart:
    npm run dev
@@ -110,10 +111,21 @@ TRI2/
 
 2. **Start the Frontend Development Server**
    ```bash
-   cd frontend
-   npm start
+   npm run client
+   # or manually:
+   cd client && npm start
    ```
    The frontend will run on `http://localhost:3000`
+
+3. **Run Both Simultaneously (Development)**
+   ```bash
+   npm run dev-full
+   ```
+
+4. **Build for Production**
+   ```bash
+   npm run build
+   ```
 
 3. **Access the Application**
    - **Main Website**: http://localhost:3000
@@ -205,15 +217,41 @@ The application is fully responsive and optimized for:
 
 ## 🚀 Deployment
 
-### Frontend Deployment (Vercel/Netlify)
+### Vercel Deployment (Recommended)
+This project is optimized for Vercel deployment with the included `vercel.json` configuration.
+
+1. **Connect to Vercel**:
+   ```bash
+   npm install -g vercel
+   vercel login
+   ```
+
+2. **Deploy**:
+   ```bash
+   vercel
+   ```
+
+3. **Set Environment Variables in Vercel Dashboard**:
+   - `MONGODB_URI`: Your MongoDB connection string
+   - `JWT_SECRET`: Your JWT secret key
+   - `NODE_ENV`: production
+
+4. **The deployment will automatically**:
+   - Build the React frontend
+   - Deploy the serverless API functions
+   - Serve static files from the build directory
+
+### Manual Deployment
+
+#### Frontend Deployment (Netlify/Vercel)
 1. Build the frontend: `npm run build`
-2. Deploy the `build` folder to your hosting platform
+2. Deploy the `client/build` folder to your hosting platform
 3. Set environment variables if needed
 
-### Backend Deployment (Heroku/Railway)
+#### Backend Deployment (Heroku/Railway)
 1. Ensure all dependencies are in `package.json`
 2. Set environment variables on your hosting platform
-3. Deploy the backend folder
+3. Deploy the root folder (not the backend subfolder)
 
 ## 🤝 Contributing
 
