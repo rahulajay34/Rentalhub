@@ -36,8 +36,8 @@ const Home = () => {
       try {
         const response = await productsAPI.getAll();
         // Get first 6 products as featured
-        if (response && Array.isArray(response.data)) {
-          setFeaturedProducts(response.data.slice(0, 6));
+        if (response && Array.isArray(response.data.products)) {
+          setFeaturedProducts(response.data.products.slice(0, 6));
         } else {
           console.error("API response for featured products was not an array:", response);
         }

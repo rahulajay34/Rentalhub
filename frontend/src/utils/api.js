@@ -43,7 +43,10 @@ api.interceptors.response.use(
 // Products API
 export const productsAPI = {
   // Public endpoints
-  getAll: (category) => api.get(`/api/products${category ? `?category=${category}` : ''}`),
+  getAll: async (category) => {
+    const response = await api.get(`/api/products${category ? `?category=${category}` : ''}`);
+    return response.data.products || [];
+  },
   getById: (id) => api.get(`/api/products/${id}`),
   
   // Admin endpoints
