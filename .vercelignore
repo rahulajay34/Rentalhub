@@ -1,22 +1,54 @@
-# Node modules - exclude both root and client
+# Vercel ignore file - optimized for deployment
+
+# Node modules - will be installed by Vercel
 node_modules
-client/node_modules
 
-# Client source files (not needed for API)
-client/src
-client/public
-client/package.json
-client/package-lock.json
-client/README.md
-
-# Environment files
+# Environment files (set in Vercel dashboard instead)
 .env
 .env.local
 .env.development
-.env.production
 
-# Build files that shouldn't be in serverless function
-client/build
+# Log files
+*.log
+npm-debug.log*
+
+# Development files not needed in production
+nodemon.json
+.gitignore
+
+# Test files
+*.test.js
+__tests__
+coverage
+setupTests.js
+
+# Documentation - not needed for deployment
+README.md
+*.md
+docs/
+DEPLOYMENT_GUIDE.md
+IMAGE_SYSTEM_GUIDE.md
+ABC.md
+
+# Development scripts that shouldn't be deployed
+add-sample-data.js
+check-admin.js
+reset-admin.js
+build-test.sh
+test.html
+
+# IDE files
+.vscode/
+.idea/
+.DS_Store
+thumbs.db
+
+# Local uploads directory (use cloud storage in production)
+uploads/
+
+# Git files
+.git/
+.gitattributes
 
 # Development and documentation files
 .vscode
