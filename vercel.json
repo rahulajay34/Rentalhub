@@ -5,7 +5,8 @@
       "src": "api/index.js",
       "use": "@vercel/node",
       "config": {
-        "maxLambdaSize": "50mb"
+        "maxLambdaSize": "50mb",
+        "includeFiles": "uploads/**"
       }
     },
     {
@@ -34,14 +35,8 @@
       "dest": "/client/build/index.html"
     }
   ],
-  "outputDirectory": "client/build",
   "installCommand": "npm install && cd client && npm install",
   "buildCommand": "cd client && npm run build",
-  "functions": {
-    "api/index.js": {
-      "maxDuration": 30
-    }
-  },
   "headers": [
     {
       "source": "/api/(.*)",
