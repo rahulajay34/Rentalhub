@@ -47,18 +47,24 @@ async function connectToDatabase() {
     
     console.log('Attempting to connect to MongoDB...');
     console.log('MongoDB URI exists:', !!process.env.MONGODB_URI);
+    console.log('Using URI:', mongoUri.substring(0, 50) + '...');
+    
+    // Close existing connection if any
+    if (mongoose.connection.readyState !== 0) {
+      await mongoose.disconnect();
+    }
     
     const connection = await mongoose.connect(mongoUri, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      serverSelectionTimeoutMS: 30000, // Increased timeout for Vercel
+      serverSelectionTimeoutMS: 15000, // 15 seconds
       maxPoolSize: 1, // Reduced for serverless
       minPoolSize: 0,
       maxIdleTimeMS: 30000,
       bufferCommands: false,
       bufferMaxEntries: 0,
-      connectTimeoutMS: 30000,
-      socketTimeoutMS: 45000
+      connectTimeoutMS: 15000,
+      socketTimeoutMS: 20000
     });
     
     cachedConnection = connection;
@@ -67,6 +73,7 @@ async function connectToDatabase() {
   } catch (err) {
     console.error('MongoDB connection error:', err.message);
     console.error('Full error:', err);
+    cachedConnection = null;
     throw err;
   }
 }
@@ -128,6 +135,18 @@ app.get('/api/health', async (req, res) => {
 // Default route
 app.get('/api', (req, res) => {
   res.json({ message: 'Rentalhub.in API Server is running!' });
+});
+
+// Debug route for environment variables
+app.get('/api/debug', (req, res) => {
+  res.json({
+    environment: process.env.NODE_ENV || 'undefined',
+    mongoUriExists: !!process.env.MONGODB_URI,
+    jwtSecretExists: !!process.env.JWT_SECRET,
+    mongoUriPrefix: process.env.MONGODB_URI ? process.env.MONGODB_URI.substring(0, 20) + '...' : 'undefined',
+    allEnvKeys: Object.keys(process.env).filter(key => key.includes('MONGO') || key.includes('JWT')),
+    timestamp: new Date().toISOString()
+  });
 });
 
 // Error handling middleware
