@@ -108,18 +108,56 @@ function App() {
                 } />
 
                 {/* Public Routes */}
-                <Route path="/*" element={
+                <Route path="/" element={
                   <>
                     <Navbar />
                     <main>
-                      <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/products" element={<Products />} />
-                        <Route path="/products/:category" element={<Products />} />
-                        <Route path="/product/:id" element={<ProductDetail />} />
-                        <Route path="/about" element={<About />} />
-                        <Route path="/contact" element={<Contact />} />
-                      </Routes>
+                      <Home />
+                    </main>
+                    <Footer />
+                  </>
+                } />
+                <Route path="/products" element={
+                  <>
+                    <Navbar />
+                    <main>
+                      <Products />
+                    </main>
+                    <Footer />
+                  </>
+                } />
+                <Route path="/products/:category" element={
+                  <>
+                    <Navbar />
+                    <main>
+                      <Products />
+                    </main>
+                    <Footer />
+                  </>
+                } />
+                <Route path="/product/:id" element={
+                  <>
+                    <Navbar />
+                    <main>
+                      <ProductDetail />
+                    </main>
+                    <Footer />
+                  </>
+                } />
+                <Route path="/about" element={
+                  <>
+                    <Navbar />
+                    <main>
+                      <About />
+                    </main>
+                    <Footer />
+                  </>
+                } />
+                <Route path="/contact" element={
+                  <>
+                    <Navbar />
+                    <main>
+                      <Contact />
                     </main>
                     <Footer />
                   </>

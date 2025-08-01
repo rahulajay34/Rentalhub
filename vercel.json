@@ -10,15 +10,13 @@
       }
     },
     {
-      "src": "client/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "build"
-      }
+      "src": "client/build/**",
+      "use": "@vercel/static"
     }
   ],
   "installCommand": "npm install && cd client && npm install",
   "buildCommand": "cd client && npm run build",
+  "outputDirectory": "client/build",
   "rewrites": [
     {
       "source": "/api/(.*)",
@@ -27,6 +25,10 @@
     {
       "source": "/uploads/(.*)",
       "destination": "/api/index.js"
+    },
+    {
+      "source": "/((?!api|uploads|static).*)",
+      "destination": "/index.html"
     }
   ],
   "headers": [
