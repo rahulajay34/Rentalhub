@@ -9,7 +9,8 @@ const productRoutes = require('../routes/products');
 const inquiryRoutes = require('../routes/inquiries');
 const adminRoutes = require('../routes/admin');
 
-dotenv.config();
+// Configure dotenv to look in parent directory
+dotenv.config({ path: path.join(__dirname, '..', '.env') });
 
 const app = express();
 

@@ -1,4 +1,10 @@
 // Simple test to check environment variables in Vercel
+const dotenv = require('dotenv');
+const path = require('path');
+
+// Configure dotenv to look in parent directory
+dotenv.config({ path: path.join(__dirname, '..', '.env') });
+
 console.log('=== Environment Variables Test ===');
 console.log('NODE_ENV:', process.env.NODE_ENV);
 console.log('MONGODB_URI exists:', !!process.env.MONGODB_URI);
