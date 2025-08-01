@@ -19,30 +19,16 @@
       "dest": "/api/index.js"
     },
     {
-      "src": "/uploads/(.*)",
-      "dest": "/uploads/$1"
-    },
-    {
-      "src": "/static/(.*)",
-      "dest": "/client/build/static/$1"
-    },
-    {
-      "src": "/(.*\\.(ico|png|jpg|jpeg|gif|svg|webp|js|css|woff|woff2|ttf|eot|map|json))",
-      "dest": "/client/build/$1"
-    },
-    {
       "src": "/(.*)",
-      "dest": "/client/build/index.html"
+      "dest": "/client/build/$1"
     }
   ],
+  "outputDirectory": "client/build",
+  "installCommand": "npm install && cd client && npm install",
+  "buildCommand": "cd client && npm run build",
   "functions": {
     "api/index.js": {
       "maxDuration": 30
     }
-  },
-  "env": {
-    "MONGODB_URI": "mongodb+srv://aj00ay00:rahulMongo@cluster0.gpymdgc.mongodb.net/demoCheetah?retryWrites=true&w=majority",
-    "JWT_SECRET": "rentalhub_secret_key_2024",
-    "NODE_ENV": "production"
   }
 }

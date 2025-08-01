@@ -19,9 +19,12 @@ app.use(cors({
     'http://localhost:3000', 
     'https://rentalhub-ten.vercel.app',
     'https://rentalhub-m983580tg-rahuls-projects-2a408d32.vercel.app',
-    /\.vercel\.app$/
+    /^https:\/\/.*\.vercel\.app$/,
+    /^https:\/\/rentalhub.*\.vercel\.app$/
   ],
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
@@ -48,12 +51,14 @@ async function connectToDatabase() {
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        serverSelectionTimeoutMS: 5000,
+        serverSelectionTimeoutMS: 10000, // Increased timeout
         maxPoolSize: 1, // Reduced for serverless
         minPoolSize: 0,
         maxIdleTimeMS: 30000,
         bufferCommands: false,
-        bufferMaxEntries: 0
+        bufferMaxEntries: 0,
+        connectTimeoutMS: 10000,
+        socketTimeoutMS: 45000
       }
     );
     
@@ -72,8 +77,17 @@ app.use(async (req, res, next) => {
     await connectToDatabase();
     next();
   } catch (error) {
-    res.status(500).json({ message: 'Database connection failed' });
+    console.error('Database connection failed:', error);
+    res.status(500).json({ message: 'Database connection failed', error: error.message });
   }
+});
+
+// Add request timeout middleware
+app.use((req, res, next) => {
+  res.setTimeout(25000, () => {
+    res.status(408).json({ message: 'Request timeout' });
+  });
+  next();
 });
 
 // Routes

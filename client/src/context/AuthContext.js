@@ -30,7 +30,12 @@ export const AuthProvider = ({ children }) => {
     const verifyToken = async () => {
       if (token) {
         try {
-          const response = await axios.get(`${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/api/admin/verify`);
+          const apiUrl = process.env.REACT_APP_API_URL || (
+            process.env.NODE_ENV === 'production' 
+              ? window.location.origin 
+              : 'http://localhost:5000'
+          );
+          const response = await axios.get(`${apiUrl}/api/admin/verify`);
           setAdmin(response.data.admin);
         } catch (error) {
           console.error('Token verification failed:', error);
@@ -45,8 +50,13 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (username, password) => {
     try {
+      const apiUrl = process.env.REACT_APP_API_URL || (
+        process.env.NODE_ENV === 'production' 
+          ? window.location.origin 
+          : 'http://localhost:5000'
+      );
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/api/admin/login`,
+        `${apiUrl}/api/admin/login`,
         { username, password }
       );
 
@@ -72,8 +82,13 @@ export const AuthProvider = ({ children }) => {
 
   const updateProfile = async (profileData) => {
     try {
+      const apiUrl = process.env.REACT_APP_API_URL || (
+        process.env.NODE_ENV === 'production' 
+          ? window.location.origin 
+          : 'http://localhost:5000'
+      );
       const response = await axios.put(
-        `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/api/admin/profile`,
+        `${apiUrl}/api/admin/profile`,
         profileData
       );
       
@@ -87,8 +102,13 @@ export const AuthProvider = ({ children }) => {
 
   const changePassword = async (currentPassword, newPassword) => {
     try {
+      const apiUrl = process.env.REACT_APP_API_URL || (
+        process.env.NODE_ENV === 'production' 
+          ? window.location.origin 
+          : 'http://localhost:5000'
+      );
       const response = await axios.put(
-        `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/api/admin/change-password`,
+        `${apiUrl}/api/admin/change-password`,
         { currentPassword, newPassword }
       );
       
