@@ -20,7 +20,7 @@ Add these **three** environment variables exactly as shown:
 
 #### Variable 1: MONGODB_URI
 - **Name**: `MONGODB_URI`
-- **Value**: `mongodb+srv://aj00ay00:rahulMongo@cluster0.gpymdgc.mongodb.net/demoCheetah?retryWrites=true&w=majority`
+- **Value**: `mongodb+srv://aj00ay00:rahulMongo@cluster0.gpymdgc.mongodb.net/rentalhub?retryWrites=true&w=majority`
 - **Environment**: Select **Production**, **Preview**, and **Development** (all three)
 
 #### Variable 2: JWT_SECRET

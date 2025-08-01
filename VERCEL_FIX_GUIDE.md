@@ -40,10 +40,10 @@ NODE_ENV=production
 
 ### 4. Database Structure Clarification
 
-You asked about having 2 databases (`demoCheetah` and `rentalhub`):
+You asked about having 2 databases (`rentalhub` and `rentalhub`):
 
 ✅ **This is fine!** MongoDB Atlas allows multiple databases:
-- `demoCheetah` - Can be your test/development database
+- `rentalhub` - Can be your test/development database
 - `rentalhub` - Your production database
 
 **Recommendation**: Use `rentalhub` for production deployment.
