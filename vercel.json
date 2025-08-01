@@ -2,21 +2,21 @@
   "version": 2,
   "builds": [
     {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "client/build"
+      }
+    },
+    {
       "src": "api/index.js",
       "use": "@vercel/node",
       "config": {
         "maxLambdaSize": "50mb",
         "includeFiles": "uploads/**"
       }
-    },
-    {
-      "src": "client/build/**",
-      "use": "@vercel/static"
     }
   ],
-  "installCommand": "npm install && cd client && npm install",
-  "buildCommand": "cd client && npm run build",
-  "outputDirectory": "client/build",
   "rewrites": [
     {
       "source": "/api/(.*)",
@@ -27,7 +27,7 @@
       "destination": "/api/index.js"
     },
     {
-      "source": "/((?!api|uploads|static).*)",
+      "source": "/(.*)",
       "destination": "/index.html"
     }
   ],

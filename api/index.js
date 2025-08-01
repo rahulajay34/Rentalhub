@@ -19,6 +19,7 @@ app.use(cors({
     'http://localhost:3000', 
     'https://rentalhub-ten.vercel.app',
     'https://rentalhub-m983580tg-rahuls-projects-2a408d32.vercel.app',
+    'https://rentalhub4.vercel.app',
     /^https:\/\/.*\.vercel\.app$/,
     /^https:\/\/rentalhub.*\.vercel\.app$/
   ],

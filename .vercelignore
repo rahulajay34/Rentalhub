@@ -43,8 +43,8 @@ test.html
 .DS_Store
 thumbs.db
 
-# Local uploads directory (use cloud storage in production)
-uploads/
+# Local uploads directory (images will be handled differently in production)
+# uploads/
 
 # Git files
 .git/
