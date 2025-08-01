@@ -42,32 +42,31 @@ async function connectToDatabase() {
   }
 
   try {
-    // Close existing connection if any
-    if (mongoose.connection.readyState !== 0) {
-      await mongoose.disconnect();
-    }
-
-    const connection = await mongoose.connect(
-      process.env.MONGODB_URI || 'mongodb+srv://aj00ay00:rahulMongo@cluster0.gpymdgc.mongodb.net/demoCheetah?retryWrites=true&w=majority', 
-      {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        serverSelectionTimeoutMS: 10000, // Increased timeout
-        maxPoolSize: 1, // Reduced for serverless
-        minPoolSize: 0,
-        maxIdleTimeMS: 30000,
-        bufferCommands: false,
-        bufferMaxEntries: 0,
-        connectTimeoutMS: 10000,
-        socketTimeoutMS: 45000
-      }
-    );
+    // Use environment variable or fallback
+    const mongoUri = process.env.MONGODB_URI || 'mongodb+srv://aj00ay00:rahulMongo@cluster0.gpymdgc.mongodb.net/demoCheetah?retryWrites=true&w=majority';
+    
+    console.log('Attempting to connect to MongoDB...');
+    console.log('MongoDB URI exists:', !!process.env.MONGODB_URI);
+    
+    const connection = await mongoose.connect(mongoUri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 30000, // Increased timeout for Vercel
+      maxPoolSize: 1, // Reduced for serverless
+      minPoolSize: 0,
+      maxIdleTimeMS: 30000,
+      bufferCommands: false,
+      bufferMaxEntries: 0,
+      connectTimeoutMS: 30000,
+      socketTimeoutMS: 45000
+    });
     
     cachedConnection = connection;
-    console.log('Connected to MongoDB');
+    console.log('Successfully connected to MongoDB');
     return connection;
   } catch (err) {
-    console.error('MongoDB connection error:', err);
+    console.error('MongoDB connection error:', err.message);
+    console.error('Full error:', err);
     throw err;
   }
 }
@@ -75,11 +74,16 @@ async function connectToDatabase() {
 // Connect to database before handling requests
 app.use(async (req, res, next) => {
   try {
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.path} - Checking DB connection`);
     await connectToDatabase();
     next();
   } catch (error) {
-    console.error('Database connection failed:', error);
-    res.status(500).json({ message: 'Database connection failed', error: error.message });
+    console.error(`[${new Date().toISOString()}] Database connection failed:`, error.message);
+    res.status(500).json({ 
+      message: 'Database connection failed. Please try again later.',
+      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      timestamp: new Date().toISOString()
+    });
   }
 });
 
@@ -97,12 +101,28 @@ app.use('/api/inquiries', inquiryRoutes);
 app.use('/api/admin', adminRoutes);
 
 // Health check route
-app.get('/api/health', (req, res) => {
-  res.json({ 
-    status: 'OK', 
-    message: 'Rentalhub.in API Server is running!',
-    timestamp: new Date().toISOString()
-  });
+app.get('/api/health', async (req, res) => {
+  try {
+    // Test database connection
+    const dbStatus = mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected';
+    
+    res.json({ 
+      status: 'OK', 
+      message: 'Rentalhub.in API Server is running!',
+      database: dbStatus,
+      environment: process.env.NODE_ENV || 'development',
+      mongoUri: process.env.MONGODB_URI ? 'Set' : 'Not Set',
+      jwtSecret: process.env.JWT_SECRET ? 'Set' : 'Not Set',
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: 'ERROR',
+      message: 'Health check failed',
+      error: error.message,
+      timestamp: new Date().toISOString()
+    });
+  }
 });
 
 // Default route
