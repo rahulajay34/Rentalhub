@@ -42,12 +42,17 @@ async function connectToDatabase() {
   }
 
   try {
-    // Use environment variable or fallback
-    const mongoUri = process.env.MONGODB_URI || 'mongodb+srv://aj00ay00:rahulMongo@cluster0.gpymdgc.mongodb.net/demoCheetah?retryWrites=true&w=majority';
+    // Use environment variable - MUST be set in Vercel
+    const mongoUri = process.env.MONGODB_URI;
+    
+    if (!mongoUri) {
+      throw new Error('MONGODB_URI environment variable is not set');
+    }
     
     console.log('Attempting to connect to MongoDB...');
-    console.log('MongoDB URI exists:', !!process.env.MONGODB_URI);
+    console.log('MongoDB URI exists:', !!mongoUri);
     console.log('Using URI:', mongoUri.substring(0, 50) + '...');
+    console.log('Environment:', process.env.NODE_ENV);
     
     // Close existing connection if any
     if (mongoose.connection.readyState !== 0) {

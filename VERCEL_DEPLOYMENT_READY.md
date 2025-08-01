@@ -4,7 +4,7 @@
 
 ### **MONGODB_URI**
 ```
-mongodb+srv://aj00ay00:rahulMongo@cluster0.gpymdgc.mongodb.net/demoCheetah?retryWrites=true&w=majority
+mongodb+srv://aj00ay00:rahulMongo@cluster0.gpymdgc.mongodb.net/rentalhub?retryWrites=true&w=majority
 ```
 
 ### **JWT_SECRET**
